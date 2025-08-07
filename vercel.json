@@ -1,0 +1,23 @@
+{
+  "buildCommand": "npx prisma generate && next build",
+  "outputDirectory": ".next",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "functions": {
+    "app/api/**/*.ts": {
+      "maxDuration": 30
+    }
+  },
+  "redirects": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "(?<subdomain>.*)\\.vercel\\.app"
+        }
+      ],
+      "destination": "https://quizzymind.vercel.app/"
+    }
+  ]
+}

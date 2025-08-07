@@ -1,0 +1,178 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+  :root {
+    /* Enhanced Color Scheme with Better Contrast */
+    /* Using the provided palette: #CDE9D6, #D2E4FD, #FFF1CB, #F8D3CF */
+    /* But with improved contrast for better readability */
+    
+    --background: 0 0% 100%;
+    --foreground: 215 25% 5%; /* Much darker for excellent contrast */
+ 
+    /* Muted: Soft neutrals with hint of mint */
+    --muted: 142 15% 92%;
+    --muted-foreground: 215 20% 25%; /* Better contrast for secondary text */
+ 
+    /* Popover: Clean overlays with soft tint */
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 5%;
+ 
+    /* Cards: Lighter mint green for better text contrast */
+    --card: 142 20% 97%;
+    --card-foreground: 215 25% 5%;
+ 
+    /* Borders: Subtle but visible */
+    --border: 142 20% 85%;
+    --input: 142 20% 85%;
+ 
+    /* Primary: Improved contrast blue */
+    --primary: 214 70% 35%; /* Even darker for better contrast */
+    --primary-foreground: 0 0% 100%;
+ 
+    /* Secondary: Improved cream/yellow */
+    --secondary: 48 60% 85%;
+    --secondary-foreground: 215 25% 5%;
+ 
+    /* Accent: Better contrast peach */
+    --accent: 8 60% 65%;
+    --accent-foreground: 215 25% 5%;
+ 
+    /* Success: Improved green for positive actions */
+    --success: 142 60% 35%;
+    --success-foreground: 0 0% 100%;
+ 
+    /* Warning: Better contrast orange */
+    --warning: 8 85% 45%;
+    --warning-foreground: 0 0% 100%;
+ 
+    /* Destructive: Better contrast red */
+    --destructive: 0 65% 50%;
+    --destructive-foreground: 0 0% 100%;
+ 
+    /* Focus ring: Matches primary */
+    --ring: 214 70% 45%;
+ 
+    --radius: 0.75rem;
+  }
+ 
+  .dark {
+    /* Enhanced Dark Mode with Better Contrast */
+    --background: 220 25% 6%; /* Slightly lighter dark background */
+    --foreground: 0 0% 95%; /* Very light text for maximum contrast */
+ 
+    --muted: 142 10% 12%; /* Lighter muted background */
+    --muted-foreground: 0 0% 70%; /* Better contrast for muted text */
+ 
+    --popover: 220 25% 8%;
+    --popover-foreground: 0 0% 95%;
+ 
+    /* Cards: Dark with good contrast */
+    --card: 142 15% 10%;
+    --card-foreground: 0 0% 95%;
+ 
+    --border: 142 10% 25%; /* More visible borders */
+    --input: 142 10% 15%; /* Better input backgrounds */
+ 
+    /* Primary: Bright blue for dark mode */
+    --primary: 214 85% 65%;
+    --primary-foreground: 220 25% 8%;
+ 
+    /* Secondary: Warm yellow for dark mode */
+    --secondary: 48 80% 70%;
+    --secondary-foreground: 220 25% 8%;
+ 
+    /* Accent: Warm peach for dark mode */
+    --accent: 8 70% 70%;
+    --accent-foreground: 220 25% 8%;
+ 
+    --success: 142 60% 50%;
+    --success-foreground: 220 25% 8%;
+ 
+    --warning: 8 80% 60%;
+    --warning-foreground: 220 25% 8%;
+ 
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 0 0% 100%;
+ 
+    --ring: 214 85% 65%;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    /* Ensure minimum contrast ratios */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Better visibility for muted text */
+  .text-muted-foreground {
+    opacity: 0.8;
+  }
+  
+  /* Dark mode specific styling */
+  .dark .text-muted-foreground {
+    opacity: 0.85;
+  }
+  
+  /* Glass morphism effects that work in both themes */
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .dark .glass-effect {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Custom gradient backgrounds using the new palette */
+  .gradient-bg {
+    background: linear-gradient(135deg, #CDE9D6 0%, #D2E4FD 50%, #FFF1CB 100%);
+  }
+  
+  .gradient-bg-dark {
+    background: linear-gradient(135deg, #2a4a32 0%, #1a3a52 50%, #4a4020 100%);
+  }
+  
+  /* Custom pastel gradients with dark mode variants */
+  .pastel-mint-blue {
+    background: linear-gradient(135deg, #CDE9D6 0%, #D2E4FD 100%);
+  }
+  
+  .dark .pastel-mint-blue {
+    background: linear-gradient(135deg, #2a4a32 0%, #1a3a52 100%);
+  }
+  
+  .pastel-blue-cream {
+    background: linear-gradient(135deg, #D2E4FD 0%, #FFF1CB 100%);
+  }
+  
+  .dark .pastel-blue-cream {
+    background: linear-gradient(135deg, #1a3a52 0%, #4a4020 100%);
+  }
+  
+  .pastel-cream-peach {
+    background: linear-gradient(135deg, #FFF1CB 0%, #F8D3CF 100%);
+  }
+  
+  .dark .pastel-cream-peach {
+    background: linear-gradient(135deg, #4a4020 0%, #4a2a2a 100%);
+  }
+  
+  .pastel-full-spectrum {
+    background: linear-gradient(135deg, #CDE9D6 0%, #D2E4FD 25%, #FFF1CB 75%, #F8D3CF 100%);
+  }
+  
+  .dark .pastel-full-spectrum {
+    background: linear-gradient(135deg, #2a4a32 0%, #1a3a52 25%, #4a4020 75%, #4a2a2a 100%);
+  }
+}
