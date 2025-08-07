@@ -7,13 +7,15 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
-import { getServerSession } from "next-auth";
+import { getAuthSession } from "@/lib/nextauth";
 import Link from "next/link";
 import { Brain, Zap, Trophy, Users } from "lucide-react";
 
 export default async function Home() {
-  const session = await getServerSession();
-  if (session?.user) {
+  const session = await getAuthSession();
+  
+  // Only redirect if we have a valid session
+  if (session?.user?.id) {
     redirect("/dashboard");
   }
 
@@ -42,6 +44,23 @@ export default async function Home() {
 
   return (
     <div className="pastel-full-spectrum">
+      {/* Debug Info - Remove this after fixing auth issues */}
+      {process.env.NODE_ENV === 'development' && (
+        <div className="bg-yellow-100 dark:bg-yellow-900/20 border-l-4 border-yellow-400 p-4 mb-4">
+          <div className="flex">
+            <div className="ml-3">
+              <p className="text-sm text-yellow-700 dark:text-yellow-200">
+                <strong>Debug:</strong> Session = {session ? 'Found' : 'None'} | 
+                User = {session?.user?.id ? 'Valid' : 'Invalid'} | 
+                Environment = {process.env.NODE_ENV}
+                <br />
+                <Link href="/debug" className="underline">Visit /debug page for detailed info</Link>
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-20 text-center">
         <div className="max-w-4xl mx-auto">
