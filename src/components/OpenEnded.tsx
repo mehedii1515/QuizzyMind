@@ -20,8 +20,18 @@ import axios from "axios";
 import { useToast } from "./ui/use-toast";
 import Link from "next/link";
 
+type SerializedGame = {
+  id: string;
+  userId: string;
+  timeStarted: string; // ISO string instead of Date
+  topic: string;
+  timeEnded: string | null; // ISO string instead of Date
+  gameType: "mcq" | "open_ended";
+  questions: Pick<Question, "id" | "question" | "answer">[];
+};
+
 type Props = {
-  game: Game & { questions: Pick<Question, "id" | "question" | "answer">[] };
+  game: SerializedGame;
 };
 
 const OpenEnded = ({ game }: Props) => {
@@ -117,7 +127,7 @@ const OpenEnded = ({ game }: Props) => {
               <h2 className="text-2xl font-bold text-foreground mb-2">Quiz Completed!</h2>
               <div className="text-lg text-muted-foreground mb-4">
                 You finished in <span className="font-semibold text-foreground">
-                  {formatTimeDelta(differenceInSeconds(now, game.timeStarted))}
+                  {formatTimeDelta(differenceInSeconds(now, new Date(game.timeStarted)))}
                 </span>
               </div>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -159,7 +169,7 @@ const OpenEnded = ({ game }: Props) => {
                 <div className="flex items-center space-x-2 text-muted-foreground">
                   <Timer className="h-5 w-5" />
                   <span className="font-medium">
-                    {formatTimeDelta(differenceInSeconds(now, game.timeStarted))}
+                    {formatTimeDelta(differenceInSeconds(now, new Date(game.timeStarted)))}
                   </span>
                 </div>
               </div>

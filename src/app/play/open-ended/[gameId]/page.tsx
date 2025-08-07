@@ -33,7 +33,15 @@ const OpenEndedPage = async ({ params: { gameId } }: Props) => {
   if (!game || game.gameType === "mcq") {
     return redirect("/quiz");
   }
-  return <OpenEnded game={game} />;
+  
+  // Serialize the game data to avoid server component serialization issues
+  const serializedGame = {
+    ...game,
+    timeStarted: game.timeStarted.toISOString(),
+    timeEnded: game.timeEnded?.toISOString() || null,
+  };
+  
+  return <OpenEnded game={serializedGame} />;
 };
 
 export default OpenEndedPage;

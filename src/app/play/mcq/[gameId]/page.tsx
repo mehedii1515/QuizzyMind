@@ -33,7 +33,15 @@ const MCQPage = async ({ params: { gameId } }: Props) => {
   if (!game || game.gameType === "open_ended") {
     return redirect("/quiz");
   }
-  return <MCQ game={game} />;
+  
+  // Serialize the game data to avoid server component serialization issues
+  const serializedGame = {
+    ...game,
+    timeStarted: game.timeStarted.toISOString(),
+    timeEnded: game.timeEnded?.toISOString() || null,
+  };
+  
+  return <MCQ game={serializedGame} />;
 };
 
 export default MCQPage;
