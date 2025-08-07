@@ -27,26 +27,7 @@ const DetailsDialog = (props: Props) => {
         <DialogHeader>
           <DialogTitle className="text-2xl">Welcome to QuizzyMind!</DialogTitle>
           <DialogDescription>
-            {/* <div className="flex items-center gap-3 my-2">
-              <p className="flex items-center">
-                <Github className="w-5 h-5" />
-                <Link
-                  className="ml-1 underline"
-                  href="https://github.com/elliott-chong/Quizzzy"
-                >
-                  GitHub
-                </Link>
-              </p>
-              <p className="flex items-center">
-                <Youtube className="w-5 h-5" />
-                <Link
-                  className="ml-1 underline"
-                  href="https://youtube.com/@elliottchong"
-                >
-                  YouTube
-                </Link>
-              </p>
-            </div> */}
+            
             <p className="my-2 mt-4 ">
               Are you tired of mundane and repetitive quizzes? Say goodbye to
               the ordinary and embrace the extraordinary with QuizzyMind! Our
