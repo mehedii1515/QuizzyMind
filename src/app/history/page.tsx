@@ -7,6 +7,9 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { History as HistoryIcon, ArrowLeft, Clock, TrendingUp } from "lucide-react";
 
+// Force this page to be dynamically rendered
+export const dynamic = 'force-dynamic';
+
 type Props = {};
 
 const History = async (props: Props) => {

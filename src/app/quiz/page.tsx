@@ -4,9 +4,14 @@ import { redirect } from "next/navigation";
 import QuizCreation from "@/components/forms/QuizCreation";
 
 export const metadata = {
-  title: "Create Quiz | QuizzyMind",
-  description: "Create and customize your quiz experience with AI-powered questions!",
+  title: "Quiz | QuizzyMind",
+  description: "Quiz yourself on anything!",
 };
+
+// Force this page to be dynamically rendered
+export const dynamic = 'force-dynamic';
+
+type Props = {};
 
 interface Props {
   searchParams: {

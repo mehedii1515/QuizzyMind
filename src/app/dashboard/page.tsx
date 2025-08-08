@@ -15,6 +15,9 @@ export const metadata = {
   description: "Quiz yourself on anything!",
 };
 
+// Force this page to be dynamically rendered
+export const dynamic = 'force-dynamic';
+
 const Dashboard = async (props: Props) => {
   const session = await getAuthSession();
   if (!session?.user) {
