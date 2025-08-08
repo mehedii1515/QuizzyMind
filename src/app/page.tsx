@@ -4,7 +4,9 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} fr          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-foreground">
+            Why Choose QuizzyMind?
+          </h2>"@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Brain, Zap, Trophy, Users } from "lucide-react";
@@ -49,7 +51,7 @@ export default function Home() {
               <Brain className="w-10 h-10 text-primary-foreground" />
             </div>
             <h1 className="text-5xl md:text-6xl font-bold mb-6 text-foreground">
-              My Quiz App
+              QuizzyMind
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed">
               Transform your learning with AI-powered quizzes.<br />

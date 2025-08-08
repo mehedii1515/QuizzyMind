@@ -1,4 +1,6 @@
-import React from "react";
+imporexport const metadata: Metadata = {
+  title: "Quiz | QuizzyMind",
+};act from "react";
 import { getCurrentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import QuizCreation from "@/components/forms/QuizCreation";

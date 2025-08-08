@@ -11,7 +11,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
           {/* Brand */}
           <div className="flex items-center space-x-2">
-            <span className="text-lg font-semibold text-foreground">My Quiz App</span>
+            <span className="text-lg font-semibold text-foreground">QuizzyMind</span>
             <span className="text-sm text-muted-foreground">© {currentYear}</span>
           </div>
 

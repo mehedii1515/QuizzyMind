@@ -1,4 +1,6 @@
-import DetailsDialog from "@/components/DetailsDialog";
+import Detaiexport const metadata: Metadata = {
+  title: "Dashboard | QuizzyMind",
+};alog from "@/components/DetailsDialog";
 import HistoryCard from "@/components/dashboard/HistoryCard";
 import HotTopicsCard from "@/components/dashboard/HotTopicsCard";
 import QuizMeCard from "@/components/dashboard/QuizMeCard";

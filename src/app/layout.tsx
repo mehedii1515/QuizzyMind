@@ -10,8 +10,8 @@ import { Toaster } from "@/components/ui/toaster";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "My Quiz App",
-  description: "Quiz yourself on anything!",
+  title: "QuizzyMind - AI-Powered Quiz Generator",
+  description: "Create intelligent quizzes instantly with AI. Test your knowledge on any topic with QuizzyMind's advanced quiz generation system.",
 };
 
 export default function RootLayout({
