@@ -12,7 +12,15 @@ import Link from "next/link";
 import { Brain, Zap, Trophy, Users } from "lucide-react";
 
 export default async function Home() {
-  const session = await getAuthSession();
+  let session = null;
+  let sessionError = null;
+  
+  try {
+    session = await getAuthSession();
+  } catch (error) {
+    console.error("Session error:", error);
+    sessionError = error;
+  }
   
   // Only redirect if we have a valid session
   if (session?.user?.id) {
@@ -45,11 +53,19 @@ export default async function Home() {
   return (
     <div className="pastel-full-spectrum">
       {/* Debug Info - Remove this after fixing auth issues */}
-      {process.env.NODE_ENV === 'development' && (
-        <div className="bg-yellow-100 dark:bg-yellow-900/20 border-l-4 border-yellow-400 p-4 mb-4">
-          <div className="flex">
-            <div className="ml-3">
-              <p className="text-sm text-yellow-700 dark:text-yellow-200">
+      <div className="bg-blue-100 dark:bg-blue-900/20 border-l-4 border-blue-400 p-4 mb-4">
+        <div className="flex">
+          <div className="ml-3">
+            <p className="text-sm text-blue-700 dark:text-blue-200">
+              <strong>Debug Info:</strong><br/>
+              Session: {session ? 'Found' : 'None'}<br/>
+              User ID: {session?.user?.id || 'Not logged in'}<br/>
+              Session Error: {sessionError ? 'Yes - check console' : 'No'}<br/>
+              Environment: {process.env.NODE_ENV}
+            </p>
+          </div>
+        </div>
+      </div>
                 <strong>Debug:</strong> Session = {session ? 'Found' : 'None'} | 
                 User = {session?.user?.id ? 'Valid' : 'Invalid'} | 
                 Environment = {process.env.NODE_ENV}
