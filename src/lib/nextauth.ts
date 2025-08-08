@@ -35,12 +35,8 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   secret: process.env.NEXTAUTH_SECRET,
-  pages: {
-    signIn: "/auth",
-    error: "/auth",
-    verifyRequest: "/auth",
-    newUser: "/auth"
-  },
+  // Disable all NextAuth default pages - use our custom implementation
+  pages: {},
   cookies: {
     sessionToken: {
       name: `next-auth.session-token`,

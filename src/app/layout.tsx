@@ -3,7 +3,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Providers from "@/components/Providers";
-import Navbar from "@/components/Navbar";
+import NavbarWrapper from "@/components/NavbarWrapper";
 import Footer from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -23,7 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={cn(inter.className, "antialiased min-h-screen flex flex-col")}>
         <Providers>
-          <Navbar />
+          <NavbarWrapper />
           <main className="flex-1">
             {children}
           </main>
