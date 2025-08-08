@@ -1,4 +1,4 @@
-// PostgreSQL Version (for Supabase Database)
+// PostgreSQL Version (for Neon Database)
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
@@ -11,60 +11,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  password      String?   // CRITICAL: Added missing password field
-  Game          Game[]
-  accounts      account[]
-  sessions      session[]
-
-  @@map("user")
-}
-
-model Game {
-  id          String     @id @default(cuid())
-  userId      String
-  timeStarted DateTime   @default(now())
-  topic       String
-  timeEnded   DateTime?
-  gameType    GameType
-  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  questions   Question[]
-
-  @@index([userId])  // Added index for performance
-  @@map("game")
-}
-
-model TopicCount {
-  id    String @id @default(cuid())
-  topic String @unique
-  count Int
-
-  @@map("topic_count")  // Match original naming
-}
-
-model Question {
-  id                String   @id @default(cuid())
-  question          String
-  answer            String
-  gameId            String
-  options           Json?    // FIXED: Should be Json type, not String
-  percentageCorrect Float?
-  isCorrect         Boolean?
-  questionType      GameType
-  userAnswer        String?
-  game              Game     @relation(fields: [gameId], references: [id], onDelete: Cascade)
-
-  @@index([gameId])  // Added index for performance
-  @@map("question")
-}
-
-model account {
-  id                String  @id @default(cuid())  // FIXED: Added @default(cuid())
+model Account {
+  id                String  @id @default(cuid())
   userId            String
   type              String
   provider          String
@@ -79,19 +27,25 @@ model account {
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
-  @@index([userId])  // Added index for performance
-  @@map("account")   // Added table mapping
 }
 
-model session {
-  id           String   @id @default(cuid())  // FIXED: Added @default(cuid())
+model Session {
+  id           String   @id @default(cuid())
   sessionToken String   @unique
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
 
-  @@index([userId])  // Added index for performance
-  @@map("session")   // Added table mapping
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  Game          Game[]
 }
 
 model VerificationToken {
@@ -100,10 +54,39 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
-  @@map("verificationtoken")  // Match original naming
 }
 
 enum GameType {
   mcq
   open_ended
+}
+
+model Game {
+  id          String     @id @default(cuid())
+  userId      String
+  timeStarted DateTime   @default(now())
+  topic       String
+  timeEnded   DateTime?
+  gameType    GameType
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  questions   Question[]
+}
+
+model TopicCount {
+  id    String @id @default(cuid())
+  topic String @unique
+  count Int
+}
+
+model Question {
+  id                String  @id @default(cuid())
+  question          String
+  answer            String
+  gameId            String
+  options           String? // JSON string for MCQ options
+  percentageCorrect Float?  // For open-ended questions
+  isCorrect         Boolean? // For MCQ questions
+  questionType      GameType
+  userAnswer        String?
+  game              Game     @relation(fields: [gameId], references: [id], onDelete: Cascade)
 }

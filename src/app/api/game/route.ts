@@ -1,5 +1,4 @@
 import { prisma } from "@/lib/db";
-import { getAuthSession } from "@/lib/nextauth";
 import { quizCreationSchema } from "@/schemas/forms/quiz";
 import { NextResponse } from "next/server";
 import { z } from "zod";
@@ -7,22 +6,29 @@ import { strict_output } from "@/lib/gemini";
 
 export async function POST(req: Request, res: Response) {
   try {
-    const session = await getAuthSession();
-    if (!session?.user) {
-      return NextResponse.json(
-        { error: "You must be logged in to create a game." },
-        {
-          status: 401,
-        }
-      );
-    }
+    // No authentication required - anyone can create games
     const body = await req.json();
     const { topic, type, amount } = quizCreationSchema.parse(body);
+    
+    // Create or find default anonymous user
+    let defaultUser = await prisma.user.findFirst({
+      where: { email: "anonymous@quizzymind.app" }
+    });
+    
+    if (!defaultUser) {
+      defaultUser = await prisma.user.create({
+        data: {
+          email: "anonymous@quizzymind.app",
+          name: "Anonymous User",
+        }
+      });
+    }
+    
     const game = await prisma.game.create({
       data: {
         gameType: type,
         timeStarted: new Date(),
-        userId: session.user.id,
+        userId: defaultUser.id,
         topic,
       },
     });
@@ -137,15 +143,7 @@ export async function POST(req: Request, res: Response) {
 }
 export async function GET(req: Request, res: Response) {
   try {
-    const session = await getAuthSession();
-    if (!session?.user) {
-      return NextResponse.json(
-        { error: "You must be logged in to create a game." },
-        {
-          status: 401,
-        }
-      );
-    }
+    // No authentication required - anyone can access games
     const url = new URL(req.url);
     const gameId = url.searchParams.get("gameId");
     if (!gameId) {
