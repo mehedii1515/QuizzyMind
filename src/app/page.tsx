@@ -62,20 +62,12 @@ export default async function Home() {
               User ID: {session?.user?.id || 'Not logged in'}<br/>
               Session Error: {sessionError ? 'Yes - check console' : 'No'}<br/>
               Environment: {process.env.NODE_ENV}
+              <br />
+              <Link href="/debug" className="underline">Visit /debug page for detailed info</Link>
             </p>
           </div>
         </div>
       </div>
-                <strong>Debug:</strong> Session = {session ? 'Found' : 'None'} | 
-                User = {session?.user?.id ? 'Valid' : 'Invalid'} | 
-                Environment = {process.env.NODE_ENV}
-                <br />
-                <Link href="/debug" className="underline">Visit /debug page for detailed info</Link>
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-20 text-center">
