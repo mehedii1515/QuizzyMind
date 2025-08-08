@@ -6,26 +6,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { redirect } from "next/navigation";
-import { getAuthSession } from "@/lib/nextauth";
 import Link from "next/link";
 import { Brain, Zap, Trophy, Users } from "lucide-react";
 
 export default async function Home() {
-  let session = null;
-  let sessionError = null;
-  
-  try {
-    session = await getAuthSession();
-  } catch (error) {
-    console.error("Session error:", error);
-    sessionError = error;
-  }
-  
-  // Only redirect if we have a valid session
-  if (session?.user?.id) {
-    redirect("/dashboard");
-  }
+  // No more authentication checks - direct access to homepage
 
   const features = [
     {
@@ -52,22 +37,6 @@ export default async function Home() {
 
   return (
     <div className="pastel-full-spectrum">
-      {/* Debug Info - Remove this after fixing auth issues */}
-      <div className="bg-blue-100 dark:bg-blue-900/20 border-l-4 border-blue-400 p-4 mb-4">
-        <div className="flex">
-          <div className="ml-3">
-            <p className="text-sm text-blue-700 dark:text-blue-200">
-              <strong>Debug Info:</strong><br/>
-              Session: {session ? 'Found' : 'None'}<br/>
-              User ID: {session?.user?.id || 'Not logged in'}<br/>
-              Session Error: {sessionError ? 'Yes - check console' : 'No'}<br/>
-              Environment: {process.env.NODE_ENV}
-              <br />
-              <Link href="/debug" className="underline">Visit /debug page for detailed info</Link>
-            </p>
-          </div>
-        </div>
-      </div>
 
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-20 text-center">

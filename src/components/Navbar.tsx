@@ -1,30 +1,31 @@
 import Link from "next/link";
 import React from "react";
 
-import UserAccountNav from "./UserAccountNav";
 import { ThemeToggle } from "./ThemeToggle";
-import { getAuthSession } from "@/lib/nextauth";
 import { Button } from "./ui/button";
 import { Brain, Home, History, Trophy, Plus } from "lucide-react";
 
-const Navbar = async () => {
-  const session = await getAuthSession();
-  
+const Navbar = () => {
   const navigationItems = [
     {
-      label: "Dashboard",
-      href: "/dashboard",
+      label: "Home",
+      href: "/",
       icon: Home,
     },
     {
-      label: "Create Quiz",
+      label: "Create Quiz", 
       href: "/quiz",
       icon: Plus,
     },
     {
       label: "History",
-      href: "/history",
+      href: "/history", 
       icon: History,
+    },
+    {
+      label: "Dashboard",
+      href: "/dashboard",
+      icon: Trophy,
     },
   ];
 
@@ -34,7 +35,7 @@ const Navbar = async () => {
         {/* Logo Section */}
         <div className="flex items-center gap-6">
           <Link 
-            href={session?.user ? "/dashboard" : "/"} 
+            href="/" 
             className="flex items-center gap-3 hover:opacity-80 transition-opacity"
           >
             <div className="relative">
@@ -51,72 +52,47 @@ const Navbar = async () => {
             </div>
           </Link>
 
-          {/* Navigation Menu - Only show when logged in */}
-          {session?.user && (
-            <nav className="hidden md:flex items-center space-x-1">
+          {/* Navigation Menu */}
+          <nav className="hidden md:flex items-center space-x-1">
+            {navigationItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors"
+                >
+                  <Icon className="w-4 h-4" />
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
+        </div>
+
+        {/* Right Section */}
+        <div className="flex items-center gap-4">
+          {/* Mobile Navigation */}
+          <div className="flex md:hidden">
+            <nav className="flex items-center space-x-1">
               {navigationItems.map((item) => {
                 const Icon = item.icon;
                 return (
                   <Link
                     key={item.href}
                     href={item.href}
-                    className="flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors"
+                    className="flex items-center justify-center w-9 h-9 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors"
                   >
                     <Icon className="w-4 h-4" />
-                    {item.label}
+                    <span className="sr-only">{item.label}</span>
                   </Link>
                 );
               })}
             </nav>
-          )}
-        </div>
-
-        {/* Right Section */}
-        <div className="flex items-center gap-4">
-          {/* Mobile Navigation - Only show when logged in */}
-          {session?.user && (
-            <div className="flex md:hidden">
-              <nav className="flex items-center space-x-1">
-                {navigationItems.map((item) => {
-                  const Icon = item.icon;
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className="flex items-center justify-center w-9 h-9 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors"
-                    >
-                      <Icon className="w-4 h-4" />
-                      <span className="sr-only">{item.label}</span>
-                    </Link>
-                  );
-                })}
-              </nav>
-            </div>
-          )}
+          </div>
 
           {/* Theme Toggle */}
           <ThemeToggle />
-
-          {/* Auth Section */}
-          {session?.user ? (
-            <UserAccountNav user={session.user} />
-          ) : (
-            <div className="flex items-center gap-3">
-              <Link href="/auth" className="hidden sm:block">
-                <Button variant="ghost" size="sm" className="text-sm font-medium">
-                  Sign In
-                </Button>
-              </Link>
-              <Link href="/auth">
-                <Button 
-                  size="sm" 
-                  className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white shadow-md font-medium"
-                >
-                  Get Started
-                </Button>
-              </Link>
-            </div>
-          )}
         </div>
       </div>
 
