@@ -30,30 +30,30 @@ const Navbar = () => {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 max-w-screen-2xl items-center justify-between px-4 md:px-6">
+      <div className="container flex h-14 sm:h-16 max-w-screen-2xl items-center justify-between px-3 sm:px-4 md:px-6">
         {/* Logo Section */}
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-3 sm:gap-6">
           <Link 
             href={user ? "/dashboard" : "/"} 
-            className="flex items-center gap-3 hover:opacity-80 transition-opacity"
+            className="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-opacity"
           >
             <div className="relative">
-              <div className="w-9 h-9 bg-gradient-to-br from-primary via-primary to-accent rounded-xl flex items-center justify-center shadow-lg">
-                <Brain className="w-5 h-5 text-white" />
+              <div className="w-8 h-8 sm:w-9 sm:h-9 bg-gradient-to-br from-primary via-primary to-accent rounded-xl flex items-center justify-center shadow-lg">
+                <Brain className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-accent rounded-full animate-pulse"></div>
+              <div className="absolute -top-1 -right-1 w-2.5 h-2.5 sm:w-3 sm:h-3 bg-accent rounded-full animate-pulse"></div>
             </div>
             <div className="flex flex-col">
-              <h1 className="text-xl font-bold bg-gradient-to-r from-primary via-primary to-accent bg-clip-text text-transparent">
+              <h1 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-primary via-primary to-accent bg-clip-text text-transparent">
                 QuizzyMind
               </h1>
-              <p className="text-[10px] text-muted-foreground leading-none">AI-Powered Quizzes</p>
+              <p className="text-[9px] sm:text-[10px] text-muted-foreground leading-none hidden xs:block">AI-Powered Quizzes</p>
             </div>
           </Link>
 
           {/* Navigation Menu - Only show when logged in */}
           {user && (
-            <nav className="hidden md:flex items-center space-x-1">
+            <nav className="hidden lg:flex items-center space-x-1">
               {navigationItems.map((item) => {
                 const Icon = item.icon;
                 return (
@@ -72,18 +72,18 @@ const Navbar = () => {
         </div>
 
         {/* Right Section */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
           {/* Mobile Navigation - Only show when logged in */}
           {user && (
-            <div className="flex md:hidden">
-              <nav className="flex items-center space-x-1">
+            <div className="flex lg:hidden">
+              <nav className="flex items-center space-x-0.5 sm:space-x-1">
                 {navigationItems.map((item) => {
                   const Icon = item.icon;
                   return (
                     <Link
                       key={item.href}
                       href={item.href}
-                      className="flex items-center justify-center w-9 h-9 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors"
+                      className="flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors touch-manipulation"
                     >
                       <Icon className="w-4 h-4" />
                       <span className="sr-only">{item.label}</span>

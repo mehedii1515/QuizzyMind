@@ -121,11 +121,11 @@ export default function AuthPage() {
   // Show loading while checking authentication
   if (authLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
-        <Card className="w-full max-w-md shadow-lg">
-          <CardContent className="p-8 text-center">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4 sm:px-6 lg:px-8">
+        <Card className="w-full max-w-sm mx-auto shadow-lg">
+          <CardContent className="p-6 sm:p-8 text-center">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Loading...</p>
+            <p className="mt-4 text-gray-600 text-sm">Loading...</p>
           </CardContent>
         </Card>
       </div>
@@ -133,19 +133,19 @@ export default function AuthPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
-      <Card className="w-full max-w-md shadow-lg">
-        <CardHeader className="text-center space-y-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4 sm:px-6 lg:px-8">
+      <Card className="w-full max-w-sm mx-auto shadow-lg">
+        <CardHeader className="text-center space-y-3 px-4 py-6">
           <div className="flex justify-center">
-            <div className="bg-blue-600 p-3 rounded-full">
-              <Brain className="h-8 w-8 text-white" />
+            <div className="bg-blue-600 p-2.5 sm:p-3 rounded-full">
+              <Brain className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
             </div>
           </div>
           <div>
-            <CardTitle className="text-2xl font-bold text-gray-900">
+            <CardTitle className="text-xl sm:text-2xl font-bold text-gray-900">
               {isLogin ? 'Welcome Back!' : 'Create Account'}
             </CardTitle>
-            <CardDescription className="text-center text-muted-foreground">
+            <CardDescription className="text-center text-muted-foreground text-sm mt-2">
               {isLogin 
               ? 'Sign in to your QuizzyMind account' 
               : 'Join QuizzyMind and start creating quizzes'
@@ -154,11 +154,11 @@ export default function AuthPage() {
           </div>
         </CardHeader>
         
-        <CardContent className="space-y-6 px-6 pb-6">
-          <form onSubmit={handleSubmit} className="space-y-4">
+        <CardContent className="space-y-4 sm:space-y-6 px-4 sm:px-6 pb-4 sm:pb-6">
+          <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
             {!isLogin && (
               <div className="space-y-2">
-                <Label htmlFor="name">Full Name</Label>
+                <Label htmlFor="name" className="text-sm font-medium">Full Name</Label>
                 <Input
                   id="name"
                   name="name"
@@ -167,13 +167,13 @@ export default function AuthPage() {
                   value={formData.name}
                   onChange={handleInputChange}
                   required={!isLogin}
-                  className="w-full"
+                  className="w-full h-11 text-base"
                 />
               </div>
             )}
             
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="text-sm font-medium">Email</Label>
               <Input
                 id="email"
                 name="email"
@@ -182,12 +182,12 @@ export default function AuthPage() {
                 value={formData.email}
                 onChange={handleInputChange}
                 required
-                className="w-full"
+                className="w-full h-11 text-base"
               />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password" className="text-sm font-medium">Password</Label>
               <div className="relative">
                 <Input
                   id="password"
@@ -197,17 +197,17 @@ export default function AuthPage() {
                   value={formData.password}
                   onChange={handleInputChange}
                   required
-                  className="w-full pr-10"
+                  className="w-full h-11 text-base pr-12"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center touch-manipulation"
                 >
                   {showPassword ? (
-                    <EyeOff className="h-4 w-4 text-gray-400" />
+                    <EyeOff className="h-5 w-5 text-gray-400" />
                   ) : (
-                    <Eye className="h-4 w-4 text-gray-400" />
+                    <Eye className="h-5 w-5 text-gray-400" />
                   )}
                 </button>
               </div>
@@ -215,28 +215,32 @@ export default function AuthPage() {
             
             <Button 
               type="submit" 
-              className="w-full bg-blue-600 hover:bg-blue-700"
+              className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-base font-medium touch-manipulation"
               disabled={loading}
             >
               {loading ? (
-                <div className="flex items-center">
+                <div className="flex items-center justify-center">
                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                  {isLogin ? 'Signing In...' : 'Creating Account...'}
+                  <span className="text-sm sm:text-base">
+                    {isLogin ? 'Signing In...' : 'Creating Account...'}
+                  </span>
                 </div>
               ) : (
-                isLogin ? 'Sign In' : 'Create Account'
+                <span className="text-sm sm:text-base">
+                  {isLogin ? 'Sign In' : 'Create Account'}
+                </span>
               )}
             </Button>
           </form>
           
-          <div className="text-center">
+          <div className="text-center pt-2">
             <button
               type="button"
               onClick={() => {
                 setIsLogin(!isLogin);
                 setFormData({ name: '', email: '', password: '' });
               }}
-              className="text-blue-600 hover:text-blue-500 text-sm font-medium"
+              className="text-blue-600 hover:text-blue-500 text-sm font-medium touch-manipulation p-2"
             >
               {isLogin 
                 ? "Don't have an account? Sign up" 

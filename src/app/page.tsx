@@ -42,35 +42,35 @@ export default function Home() {
   return (
     <div className="pastel-full-spectrum">
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-20 text-center">
+      <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 text-center">
         <div className="max-w-4xl mx-auto">
-          <div className="mb-8">
-            <div className="inline-flex items-center justify-center w-20 h-20 pastel-mint-blue rounded-2xl mb-6 shadow-lg">
-              <Brain className="w-10 h-10 text-primary-foreground" />
+          <div className="mb-6 sm:mb-8">
+            <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 pastel-mint-blue rounded-2xl mb-4 sm:mb-6 shadow-lg">
+              <Brain className="w-8 h-8 sm:w-10 sm:h-10 text-primary-foreground" />
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-foreground">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 text-foreground leading-tight">
               QuizzyMind
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed">
-              Transform your learning with AI-powered quizzes.<br />
-              Create, practice, and master any subject instantly.
+            <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground mb-6 sm:mb-8 leading-relaxed px-2">
+              Transform your learning with AI-powered quizzes.<br className="hidden sm:block" />
+              <span className="sm:hidden"> </span>Create, practice, and master any subject instantly.
             </p>
           </div>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <Link href="/auth">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-12 sm:mb-16 px-4">
+            <Link href="/auth" className="w-full sm:w-auto">
               <Button 
                 size="lg" 
-                className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg px-8 py-6 text-lg font-semibold"
+                className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg font-semibold touch-manipulation"
               >
                 Get Started Free
               </Button>
             </Link>
-            <Link href="/auth">
+            <Link href="/auth" className="w-full sm:w-auto">
               <Button 
                 variant="outline" 
                 size="lg"
-                className="px-8 py-6 text-lg font-semibold border-primary/20 hover:border-primary/40 bg-secondary/50 hover:bg-secondary/70"
+                className="w-full sm:w-auto px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg font-semibold border-primary/20 hover:border-primary/40 bg-secondary/50 hover:bg-secondary/70 touch-manipulation"
               >
                 Learn More
               </Button>
@@ -79,24 +79,24 @@ export default function Home() {
         </div>
 
         {/* Features Grid */}
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12 text-foreground">
-            Why Choose My Quiz App?
+        <div className="max-w-6xl mx-auto px-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-12 text-foreground">
+            Why Choose QuizzyMind?
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {features.map((feature, index) => {
               const Icon = feature.icon;
               return (
-                <Card key={index} className="text-center p-6 hover:shadow-lg transition-shadow border-border/50">
-                  <CardHeader className="pb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl flex items-center justify-center mx-auto mb-4">
-                      <Icon className="w-6 h-6 text-primary" />
+                <Card key={index} className="text-center p-4 sm:p-6 hover:shadow-lg transition-shadow border-border/50">
+                  <CardHeader className="pb-3 sm:pb-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                      <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                     </div>
-                    <CardTitle className="text-xl font-semibold text-foreground">
+                    <CardTitle className="text-lg sm:text-xl font-semibold text-foreground">
                       {feature.title}
                     </CardTitle>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="px-2">
                     <CardDescription className="text-sm leading-relaxed">
                       {feature.description}
                     </CardDescription>

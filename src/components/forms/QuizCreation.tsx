@@ -69,26 +69,27 @@ const QuizCreation = ({ topic }: Props) => {
   form.watch();
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8 px-4 sm:px-0">
       {/* Header Section */}
-      <div className="text-center space-y-4">
-        <div className="flex items-center justify-center mb-6">
-          <Link href="/dashboard" className="mr-auto">
-            <Button variant="outline" size="sm" className="gap-2">
+      <div className="text-center space-y-3 sm:space-y-4">
+        <div className="flex flex-col sm:flex-row items-center justify-between mb-4 sm:mb-6 gap-4">
+          <Link href="/dashboard" className="order-2 sm:order-1">
+            <Button variant="outline" size="sm" className="gap-2 touch-manipulation">
               <ArrowLeft className="h-4 w-4" />
-              Back to Dashboard
+              <span className="hidden sm:inline">Back to Dashboard</span>
+              <span className="sm:hidden">Back</span>
             </Button>
           </Link>
-          <div className="flex items-center space-x-3">
-            <div className="p-3 bg-primary/90 rounded-xl shadow-sm">
-              <Brain className="h-8 w-8 text-white" />
+          <div className="flex items-center space-x-2 sm:space-x-3 order-1 sm:order-2">
+            <div className="p-2 sm:p-3 bg-primary/90 rounded-xl shadow-sm">
+              <Brain className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
             </div>
-            <div>
-              <h1 className="text-3xl font-bold text-foreground">Create Quiz</h1>
-              <p className="text-muted-foreground">Design your perfect learning experience</p>
+            <div className="text-left sm:text-center">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground">Create Quiz</h1>
+              <p className="text-sm sm:text-base text-muted-foreground hidden sm:block">Design your perfect learning experience</p>
             </div>
           </div>
-          <div className="ml-auto w-20"></div> {/* Spacer for centering */}
+          <div className="hidden sm:block w-20 order-3"></div> {/* Spacer for centering */}
         </div>
       </div>
 
@@ -215,7 +216,7 @@ const QuizCreation = ({ topic }: Props) => {
                 disabled={isPending} 
                 type="submit" 
                 size="lg" 
-                className="w-full h-16 text-lg bg-primary hover:bg-primary/90 text-primary-foreground shadow-xl hover:shadow-2xl transition-all duration-300 font-semibold"
+                className="w-full h-12 sm:h-16 text-base sm:text-lg bg-primary hover:bg-primary/90 text-primary-foreground shadow-xl hover:shadow-2xl transition-all duration-300 font-semibold touch-manipulation"
               >
                 {isPending ? "Generating Quiz..." : "Create Quiz"}
               </Button>
