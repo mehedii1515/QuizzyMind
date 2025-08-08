@@ -4,9 +4,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} fr          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-foreground">
-            Why Choose QuizzyMind?
-          </h2>"@/components/ui/card";
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Brain, Zap, Trophy, Users } from "lucide-react";

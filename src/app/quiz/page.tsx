@@ -1,12 +1,11 @@
-imporexport const metadata: Metadata = {
-  title: "Quiz | QuizzyMind",
-};act from "react";
+import { Metadata } from "next";
+import React from "react";
 import { getCurrentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import QuizCreation from "@/components/forms/QuizCreation";
 
-export const metadata = {
-  title: "Quiz | My Quiz App",
+export const metadata: Metadata = {
+  title: "Quiz | QuizzyMind",
   description: "Quiz yourself on anything!",
 };
 

@@ -1,6 +1,5 @@
-import Detaiexport const metadata: Metadata = {
-  title: "Dashboard | QuizzyMind",
-};alog from "@/components/DetailsDialog";
+import { Metadata } from "next";
+import DetailsDialog from "@/components/DetailsDialog";
 import HistoryCard from "@/components/dashboard/HistoryCard";
 import HotTopicsCard from "@/components/dashboard/HotTopicsCard";
 import QuizMeCard from "@/components/dashboard/QuizMeCard";
@@ -8,14 +7,14 @@ import RecentActivityCard from "@/components/dashboard/RecentActivityCard";
 import { getCurrentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import React from "react";
+
+export const metadata: Metadata = {
+  title: "Dashboard | QuizzyMind",
+  description: "Quiz yourself on anything!",
+};
 import { prisma } from "@/lib/db";
 
 type Props = {};
-
-export const metadata = {
-  title: "Dashboard | My Quiz App",
-  description: "Quiz yourself on anything!",
-};
 
 // Force this page to be dynamically rendered
 export const dynamic = 'force-dynamic';
