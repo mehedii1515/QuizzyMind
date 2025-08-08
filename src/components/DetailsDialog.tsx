@@ -25,12 +25,12 @@ const DetailsDialog = (props: Props) => {
       </DialogTrigger>
       <DialogContent className="w-[70vw] max-w-[100vw] md:w-[50vw]">
         <DialogHeader>
-          <DialogTitle className="text-2xl">Welcome to QuizzyMind!</DialogTitle>
+          <DialogTitle className="text-2xl">Welcome to My Quiz App!</DialogTitle>
           <DialogDescription>
             
             <p className="my-2 mt-4 ">
               Are you tired of mundane and repetitive quizzes? Say goodbye to
-              the ordinary and embrace the extraordinary with QuizzyMind! Our
+              the ordinary and embrace the extraordinary with My Quiz App! Our
               platform is revolutionizing the quiz and trivia experience by
               harnessing the immense potential of artificial intelligence.
             </p>

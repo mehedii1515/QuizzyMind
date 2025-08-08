@@ -6,18 +6,12 @@
   "functions": {
     "app/api/**/*.ts": {
       "maxDuration": 30
+    },
+    "app/api/game/route.ts": {
+      "maxDuration": 60
+    },
+    "app/api/questions/route.ts": {
+      "maxDuration": 60
     }
-  },
-  "redirects": [
-    {
-      "source": "/",
-      "has": [
-        {
-          "type": "host",
-          "value": "(?<subdomain>.*)\\.vercel\\.app"
-        }
-      ],
-      "destination": "https://quizzymind.vercel.app/"
-    }
-  ]
+  }
 }

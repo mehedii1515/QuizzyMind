@@ -143,8 +143,8 @@ export default function AuthPage() {
           </CardTitle>
           <CardDescription>
             {isLogin 
-              ? 'Sign in to your QuizzyMind account' 
-              : 'Join QuizzyMind and start creating quizzes'
+              ? 'Sign in to your My Quiz App account' 
+              : 'Join My Quiz App and start creating quizzes'
             }
           </CardDescription>
         </CardHeader>

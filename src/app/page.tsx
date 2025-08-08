@@ -49,7 +49,7 @@ export default function Home() {
               <Brain className="w-10 h-10 text-primary-foreground" />
             </div>
             <h1 className="text-5xl md:text-6xl font-bold mb-6 text-foreground">
-              QuizzyMind
+              My Quiz App
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed">
               Transform your learning with AI-powered quizzes.<br />
@@ -81,7 +81,7 @@ export default function Home() {
         {/* Features Grid */}
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-12 text-foreground">
-            Why Choose QuizzyMind?
+            Why Choose My Quiz App?
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {features.map((feature, index) => {

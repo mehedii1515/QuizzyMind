@@ -17,14 +17,14 @@ export async function POST(req: Request, res: Response) {
     // If no authenticated user, create or find anonymous user
     if (!user) {
       let defaultUser = await prisma.user.findFirst({
-        where: { email: "anonymous@quizzymind.app" }
+        where: { email: "anonymous@myquizapp.local" }
       });
       
       if (!defaultUser) {
         const hashedPassword = await hashPassword("anonymous123");
         defaultUser = await prisma.user.create({
           data: {
-            email: "anonymous@quizzymind.app",
+            email: "anonymous@myquizapp.local",
             name: "Anonymous User",
             password: hashedPassword,
           }

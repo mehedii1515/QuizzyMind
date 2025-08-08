@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import QuizCreation from "@/components/forms/QuizCreation";
 
 export const metadata = {
-  title: "Quiz | QuizzyMind",
+  title: "Quiz | My Quiz App",
   description: "Quiz yourself on anything!",
 };
 

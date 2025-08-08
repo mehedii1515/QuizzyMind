@@ -45,7 +45,7 @@ const Navbar = () => {
             </div>
             <div className="flex flex-col">
               <h1 className="text-xl font-bold bg-gradient-to-r from-primary via-primary to-accent bg-clip-text text-transparent">
-                QuizzyMind
+                My Quiz App
               </h1>
               <p className="text-[10px] text-muted-foreground leading-none">AI-Powered Quizzes</p>
             </div>

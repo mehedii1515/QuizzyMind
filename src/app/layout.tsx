@@ -10,7 +10,7 @@ import { Toaster } from "@/components/ui/toaster";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "QuizzyMind",
+  title: "My Quiz App",
   description: "Quiz yourself on anything!",
 };
 

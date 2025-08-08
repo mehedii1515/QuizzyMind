@@ -11,7 +11,7 @@ import { prisma } from "@/lib/db";
 type Props = {};
 
 export const metadata = {
-  title: "Dashboard | QuizzyMind",
+  title: "Dashboard | My Quiz App",
   description: "Quiz yourself on anything!",
 };
 
