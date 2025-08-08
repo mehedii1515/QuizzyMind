@@ -1,5 +1,5 @@
 import React from "react";
-import { getAuthSession } from "@/lib/nextauth";
+import { getCurrentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import QuizCreation from "@/components/forms/QuizCreation";
 
@@ -11,8 +11,6 @@ export const metadata = {
 // Force this page to be dynamically rendered
 export const dynamic = 'force-dynamic';
 
-type Props = {};
-
 interface Props {
   searchParams: {
     topic?: string;
@@ -20,9 +18,9 @@ interface Props {
 }
 
 const Quiz = async ({ searchParams }: Props) => {
-  const session = await getAuthSession();
-  if (!session?.user) {
-    redirect("/");
+  const user = await getCurrentUser();
+  if (!user) {
+    redirect("/auth");
   }
   
   return (

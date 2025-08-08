@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
-import { getAuthSession } from "@/lib/nextauth";
+import { getCurrentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import HistoryComponent from "../HistoryComponent";
 import { prisma } from "@/lib/db";
@@ -16,14 +16,14 @@ import { Activity, ArrowRight } from "lucide-react";
 type Props = {};
 
 const RecentActivityCard = async (props: Props) => {
-  const session = await getAuthSession();
-  if (!session?.user) {
-    return redirect("/");
+  const user = await getCurrentUser();
+  if (!user) {
+    return redirect("/auth");
   }
   
   const games_count = await prisma.game.count({
     where: {
-      userId: session.user.id,
+      userId: user.id,
     },
   });
 
@@ -94,7 +94,7 @@ const RecentActivityCard = async (props: Props) => {
         ) : (
           <div className="max-h-[400px] overflow-y-auto">
             <div className="p-4">
-              <HistoryComponent limit={6} userId={session.user.id} />
+              <HistoryComponent limit={6} userId={user.id} />
             </div>
             
             {games_count > 6 && (

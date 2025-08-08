@@ -1,6 +1,6 @@
 import MCQ from "@/components/MCQ";
 import { prisma } from "@/lib/db";
-import { getAuthSession } from "@/lib/nextauth";
+import { getCurrentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import React from "react";
 
@@ -11,9 +11,9 @@ type Props = {
 };
 
 const MCQPage = async ({ params: { gameId } }: Props) => {
-  const session = await getAuthSession();
-  if (!session?.user) {
-    return redirect("/");
+  const user = await getCurrentUser();
+  if (!user) {
+    return redirect("/auth");
   }
 
   const game = await prisma.game.findUnique({

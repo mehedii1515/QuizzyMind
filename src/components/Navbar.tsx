@@ -1,14 +1,14 @@
+"use client";
 import Link from "next/link";
 import React from "react";
-
+import { useAuth } from "@/contexts/AuthContext";
 import UserAccountNav from "./UserAccountNav";
 import { ThemeToggle } from "./ThemeToggle";
-import { getAuthSession } from "@/lib/nextauth";
 import { Button } from "./ui/button";
 import { Brain, Home, History, Trophy, Plus } from "lucide-react";
 
-const Navbar = async () => {
-  const session = await getAuthSession();
+const Navbar = () => {
+  const { user, loading } = useAuth();
   
   const navigationItems = [
     {
@@ -34,7 +34,7 @@ const Navbar = async () => {
         {/* Logo Section */}
         <div className="flex items-center gap-6">
           <Link 
-            href={session?.user ? "/dashboard" : "/"} 
+            href={user ? "/dashboard" : "/"} 
             className="flex items-center gap-3 hover:opacity-80 transition-opacity"
           >
             <div className="relative">
@@ -52,7 +52,7 @@ const Navbar = async () => {
           </Link>
 
           {/* Navigation Menu - Only show when logged in */}
-          {session?.user && (
+          {user && (
             <nav className="hidden md:flex items-center space-x-1">
               {navigationItems.map((item) => {
                 const Icon = item.icon;
@@ -74,7 +74,7 @@ const Navbar = async () => {
         {/* Right Section */}
         <div className="flex items-center gap-4">
           {/* Mobile Navigation - Only show when logged in */}
-          {session?.user && (
+          {user && (
             <div className="flex md:hidden">
               <nav className="flex items-center space-x-1">
                 {navigationItems.map((item) => {
@@ -98,24 +98,26 @@ const Navbar = async () => {
           <ThemeToggle />
 
           {/* Auth Section */}
-          {session?.user ? (
-            <UserAccountNav user={session.user} />
+          {user ? (
+            <UserAccountNav user={user} />
           ) : (
-            <div className="flex items-center gap-3">
-              <Link href="/auth" className="hidden sm:block">
-                <Button variant="ghost" size="sm" className="text-sm font-medium">
-                  Sign In
-                </Button>
-              </Link>
-              <Link href="/auth">
-                <Button 
-                  size="sm" 
-                  className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white shadow-md font-medium"
-                >
-                  Get Started
-                </Button>
-              </Link>
-            </div>
+            !loading && (
+              <div className="flex items-center gap-3">
+                <Link href="/auth" className="hidden sm:block">
+                  <Button variant="ghost" size="sm" className="text-sm font-medium">
+                    Sign In
+                  </Button>
+                </Link>
+                <Link href="/auth">
+                  <Button 
+                    size="sm" 
+                    className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white shadow-md font-medium"
+                  >
+                    Get Started
+                  </Button>
+                </Link>
+              </div>
+            )
           )}
         </div>
       </div>

@@ -49,7 +49,6 @@ const HistoryCard = (props: Props) => {
           variant="secondary"
           className="w-full bg-accent hover:bg-accent/90 text-accent-foreground border-accent hover:border-accent/90 transition-all duration-300"
         >
-        >
           <Clock size={16} className="mr-2" />
           View History
           <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform duration-300" />

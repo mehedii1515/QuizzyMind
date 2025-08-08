@@ -3,7 +3,7 @@ import HistoryCard from "@/components/dashboard/HistoryCard";
 import HotTopicsCard from "@/components/dashboard/HotTopicsCard";
 import QuizMeCard from "@/components/dashboard/QuizMeCard";
 import RecentActivityCard from "@/components/dashboard/RecentActivityCard";
-import { getAuthSession } from "@/lib/nextauth";
+import { getCurrentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import React from "react";
 import { prisma } from "@/lib/db";
@@ -19,18 +19,18 @@ export const metadata = {
 export const dynamic = 'force-dynamic';
 
 const Dashboard = async (props: Props) => {
-  const session = await getAuthSession();
-  if (!session?.user) {
-    redirect("/");
+  const user = await getCurrentUser();
+  if (!user) {
+    redirect("/auth");
   }
 
   // Get user stats for dashboard
   const [gamesCount, recentGames] = await Promise.all([
     prisma.game.count({
-      where: { userId: session.user.id },
+      where: { userId: user.id },
     }),
     prisma.game.findMany({
-      where: { userId: session.user.id },
+      where: { userId: user.id },
       orderBy: { timeStarted: "desc" },
       take: 5,
       include: {
@@ -60,7 +60,7 @@ const Dashboard = async (props: Props) => {
         <div className="flex items-center justify-between mb-8">
           <div className="space-y-1">
             <h1 className="text-4xl font-bold tracking-tight text-foreground">
-              Welcome back, {session.user.name?.split(' ')[0] || 'User'}! 👋
+              Welcome back, {user.name?.split(' ')[0] || 'User'}! 👋
             </h1>
             <p className="text-lg text-muted-foreground">
               Ready to challenge yourself today?

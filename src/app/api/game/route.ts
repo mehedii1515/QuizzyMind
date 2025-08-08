@@ -3,36 +3,50 @@ import { quizCreationSchema } from "@/schemas/forms/quiz";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { strict_output } from "@/lib/gemini";
+import { hashPassword } from "@/lib/password";
+import { getCurrentUser } from "@/lib/auth";
 
 export async function POST(req: Request, res: Response) {
   try {
-    // No authentication required - anyone can create games
     const body = await req.json();
     const { topic, type, amount } = quizCreationSchema.parse(body);
     
-    // Create or find default anonymous user
-    let defaultUser = await prisma.user.findFirst({
-      where: { email: "anonymous@quizzymind.app" }
-    });
+    // Try to get current authenticated user first
+    let user = await getCurrentUser();
     
-    if (!defaultUser) {
-      defaultUser = await prisma.user.create({
-        data: {
-          email: "anonymous@quizzymind.app",
-          name: "Anonymous User",
-        }
+    // If no authenticated user, create or find anonymous user
+    if (!user) {
+      let defaultUser = await prisma.user.findFirst({
+        where: { email: "anonymous@quizzymind.app" }
       });
+      
+      if (!defaultUser) {
+        const hashedPassword = await hashPassword("anonymous123");
+        defaultUser = await prisma.user.create({
+          data: {
+            email: "anonymous@quizzymind.app",
+            name: "Anonymous User",
+            password: hashedPassword,
+          }
+        });
+      }
+      user = { id: defaultUser.id, email: defaultUser.email, name: defaultUser.name };
+    }
+
+    // At this point, user is guaranteed to be defined
+    if (!user) {
+      return NextResponse.json({ error: "Failed to get or create user" }, { status: 500 });
     }
     
     const game = await prisma.game.create({
       data: {
         gameType: type,
         timeStarted: new Date(),
-        userId: defaultUser.id,
+        userId: user.id,
         topic,
       },
     });
-    await prisma.topic_count.upsert({
+    await prisma.topicCount.upsert({
       where: {
         topic,
       },

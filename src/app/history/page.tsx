@@ -1,5 +1,5 @@
 import HistoryComponent from "@/components/HistoryComponent";
-import { getAuthSession } from "@/lib/nextauth";
+import { getCurrentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import React from "react";
@@ -13,9 +13,9 @@ export const dynamic = 'force-dynamic';
 type Props = {};
 
 const History = async (props: Props) => {
-  const session = await getAuthSession();
-  if (!session?.user) {
-    return redirect("/");
+  const user = await getCurrentUser();
+  if (!user) {
+    return redirect("/auth");
   }
   
   return (
@@ -112,7 +112,7 @@ const History = async (props: Props) => {
           <CardContent className="p-0">
             <div className="max-h-[70vh] overflow-y-auto">
               <div className="p-6">
-                <HistoryComponent limit={50} userId={session.user.id} />
+                <HistoryComponent limit={50} userId={user.id} />
               </div>
             </div>
           </CardContent>

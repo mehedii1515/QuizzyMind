@@ -1,5 +1,5 @@
 import { strict_output } from "@/lib/gemini";
-import { getAuthSession } from "@/lib/nextauth";
+import { getCurrentUser } from "@/lib/auth";
 import { getQuestionsSchema } from "@/schemas/questions";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
@@ -9,8 +9,8 @@ export const maxDuration = 300;
 
 export async function POST(req: Request, res: Response) {
   try {
-    const session = await getAuthSession();
-    // if (!session?.user) {
+    const user = await getCurrentUser();
+    // if (!user) {
     //   return NextResponse.json(
     //     { error: "You must be logged in to create a game." },
     //     {

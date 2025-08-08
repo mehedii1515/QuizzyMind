@@ -1,7 +1,8 @@
 "use client";
 
-import type { User } from "next-auth";
 import React from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import { useRouter } from "next/navigation";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,14 +12,31 @@ import {
 } from "@/components/ui/dropdown-menu";
 import UserAvatar from "./UserAvatar";
 import Link from "next/link";
-import { signOut } from "next-auth/react";
 import { LogOut, User as UserIcon, BarChart3 } from "lucide-react";
 
+interface User {
+  id: string;
+  name: string;
+  email: string;
+}
+
 type Props = {
-  user: Pick<User, "name" | "image" | "email">;
+  user: User;
 };
 
-const UserAccountNav = ({ user }: Props) => {
+const UserAccountNav = () => {
+  const { user, logout } = useAuth();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      router.push('/auth'); // Redirect to auth page after logout
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="focus:outline-none">
@@ -26,7 +44,7 @@ const UserAccountNav = ({ user }: Props) => {
           className="w-10 h-10 border-2 border-primary/20 hover:border-primary/40 transition-colors"
           user={{
             name: user.name || null,
-            image: user.image || null,
+            image: null, // We don't have images in our simple auth system
           }}
         />
       </DropdownMenuTrigger>
@@ -36,7 +54,6 @@ const UserAccountNav = ({ user }: Props) => {
             className="w-12 h-12"
             user={{
               name: user.name || null,
-              image: user.image || null,
             }}
           />
           <div className="flex flex-col space-y-1 leading-none">
@@ -72,9 +89,7 @@ const UserAccountNav = ({ user }: Props) => {
         <DropdownMenuItem
           onSelect={(event) => {
             event.preventDefault();
-            signOut({
-              callbackUrl: "/",
-            }).catch(console.error);
+            handleLogout();
           }}
           className="text-destructive hover:text-destructive cursor-pointer focus:text-destructive"
         >

@@ -1,6 +1,6 @@
 import { buttonVariants } from "@/components/ui/button";
 import { prisma } from "@/lib/db";
-import { getAuthSession } from "@/lib/nextauth";
+import { getCurrentUser } from "@/lib/auth";
 import { LucideLayoutDashboard, BarChart } from "lucide-react";
 import Link from "next/link";
 
@@ -18,9 +18,9 @@ type Props = {
 };
 
 const Statistics = async ({ params: { gameId } }: Props) => {
-  const session = await getAuthSession();
-  if (!session?.user) {
-    return redirect("/");
+  const user = await getCurrentUser();
+  if (!user) {
+    return redirect("/auth");
   }
   const game = await prisma.game.findUnique({
     where: { id: gameId },

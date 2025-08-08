@@ -15,7 +15,7 @@ import Link from "next/link";
 type Props = {};
 
 const HotTopicsCard = async (props: Props) => {
-  const topics = await prisma.topic_count.findMany({
+  const topics = await prisma.topicCount.findMany({
     orderBy: {
       count: 'desc'
     },

@@ -1,43 +1,70 @@
 import { NextRequest, NextResponse } from "next/server";
+import { verifyToken } from "@/lib/auth";
 
 export function middleware(request: NextRequest) {
+  // Get the pathname
   const pathname = request.nextUrl.pathname;
+
+  console.log('Middleware running for:', pathname);
+  console.log('JWT_SECRET available:', !!process.env.JWT_SECRET);
+
+  // Define protected routes
+  const protectedRoutes = ['/dashboard', '/quiz', '/play', '/history', '/statistics'];
   
-  // Block all NextAuth automatic pages and redirect to our custom auth page
-  if (pathname.startsWith('/api/auth/signin') || 
-      pathname.startsWith('/api/auth/signup') ||
-      pathname.startsWith('/auth/signin') || 
-      pathname.startsWith('/auth/signup') || 
-      pathname.startsWith('/auth/login') ||
-      pathname.startsWith('/auth/error')) {
-    return NextResponse.redirect(new URL('/auth', request.url));
-  }
-  
-  // Protect authenticated routes
-  const protectedPaths = ['/dashboard', '/quiz', '/play', '/history', '/statistics'];
-  if (protectedPaths.some(path => pathname.startsWith(path))) {
-    // Let NextAuth handle authentication for protected routes
-    const token = request.cookies.get('next-auth.session-token');
+  // Check if the current path is protected
+  const isProtectedRoute = protectedRoutes.some(route => 
+    pathname.startsWith(route)
+  );
+
+  console.log('Is protected route:', isProtectedRoute);
+
+  if (isProtectedRoute) {
+    // Get the auth token from cookies
+    const token = request.cookies.get('auth-token')?.value;
+    
+    console.log('Token found:', !!token);
+    
     if (!token) {
+      console.log('No token, redirecting to auth');
+      // Redirect to auth page if no token
       return NextResponse.redirect(new URL('/auth', request.url));
     }
+
+    // Verify the token
+    const user = verifyToken(token);
+    
+    console.log('Token valid:', !!user);
+    
+    if (!user) {
+      console.log('Invalid token, redirecting to auth');
+      // Redirect to auth page if token is invalid
+      const response = NextResponse.redirect(new URL('/auth', request.url));
+      // Clear the invalid token
+      response.cookies.delete('auth-token');
+      return response;
+    }
   }
-  
+
+  // If user is authenticated and tries to access auth page, redirect to dashboard
+  if (pathname === '/auth') {
+    const token = request.cookies.get('auth-token')?.value;
+    
+    console.log('Auth page access, token found:', !!token);
+    
+    if (token) {
+      const user = verifyToken(token);
+      console.log('Auth page access, token valid:', !!user);
+      if (user) {
+        console.log('Redirecting from auth to dashboard');
+        return NextResponse.redirect(new URL('/dashboard', request.url));
+      }
+    }
+  }
+
+  console.log('Middleware allowing request to continue');
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: [
-    '/api/auth/signin',
-    '/api/auth/signup',
-    '/auth/signin',
-    '/auth/signup', 
-    '/auth/login',
-    '/auth/error',
-    '/dashboard/:path*',
-    '/quiz/:path*',
-    '/play/:path*',
-    '/history/:path*',
-    '/statistics/:path*',
-  ],
+  matcher: []
 };
