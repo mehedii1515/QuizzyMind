@@ -38,6 +38,8 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/auth",
     error: "/auth",
+    verifyRequest: "/auth",
+    newUser: "/auth"
   },
   cookies: {
     sessionToken: {
@@ -51,6 +53,13 @@ export const authOptions: NextAuthOptions = {
     }
   },
   callbacks: {
+    redirect: async ({ url, baseUrl }) => {
+      // Always redirect auth actions to our custom page
+      if (url.includes('/api/auth/signin') || url.includes('/api/auth/signup') || url.includes('/auth/login') || url.includes('/auth/signin')) {
+        return `${baseUrl}/auth`;
+      }
+      return url.startsWith(baseUrl) ? url : baseUrl;
+    },
     jwt: async ({ token }) => {
       const db_user = await prisma.user.findFirst({
         where: {
